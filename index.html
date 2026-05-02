@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时光影像 Timepic.site （概念站）- 让每一刻都有迹可循</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* 🌟 提亮整体背景 + 特效更明显 */
+        body {
+            min-height: 100vh;
+            background: #1a243e;
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 柔和星光粒子（更明显、不杂乱） */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(120, 150, 255, 0.08) 0%, transparent 15%),
+                radial-gradient(circle at 90% 80%, rgba(160, 120, 255, 0.08) 0%, transparent 15%),
+                radial-gradient(circle at 30% 70%, rgba(100, 170, 255, 0.07) 0%, transparent 20%);
+            z-index: -2;
+            animation: subtleShine 20s linear infinite;
+        }
+
+        /* 时间流动光带（更明显、柔和、高级） */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 150%;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                transparent,
+                rgba(90, 140, 255, 0.09),
+                transparent
+            );
+            z-index: -1;
+            animation: timeFlow 16s ease-in-out infinite;
+        }
+
+        /* 时间轴微光 */
+        .time-axis {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .time-axis::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+            animation: pulseLight 9s ease-in-out infinite;
+        }
+
+        @keyframes timeFlow {
+            0% { transform: translateX(-30%); }
+            50% { transform: translateX(0%); }
+            100% { transform: translateX(-30%); }
+        }
+        @keyframes subtleShine {
+            0% { opacity: 0.9; }
+            50% { opacity: 1; }
+            100% { opacity: 0.9; }
+        }
+        @keyframes pulseLight {
+            0%,100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: rgba(26, 26, 26, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #3b82f6;
+        }
+
+        /* 通用区块样式 */
+        section {
+            padding: 5rem 5%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 英雄区样式 */
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #3b82f6, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+            color: #e2e8f0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .cta-button {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .cta-primary {
+            background: #3b82f6;
+            color: #fff;
+        }
+
+        .cta-primary:hover {
+            background: #2563eb;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #a855f7;
+        }
+
+        .cta-secondary:hover {
+            background: rgba(168, 85, 247, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(168, 85, 247, 0.2);
+        }
+
+        /* 统计区块样式 */
+        .stats {
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            margin: 2rem 5%;
+            padding: 3rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            color: #94a3b8;
+        }
+
+        /* 功能区块样式 —— 固定：2行3列 */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: #a855f7;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .feature-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+            flex:1;
+        }
+
+        /* 上传区块样式 */
+        .upload-section {
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            margin: 2rem 5%;
+            padding: 3rem;
+        }
+
+        .upload-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .upload-area {
+            background: rgba(26, 26, 46, 0.8);
+            border: 2px dashed rgba(59, 130, 246, 0.5);
+            border-radius: 12px;
+            padding: 4rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: #3b82f6;
+            background: rgba(26, 26, 46, 0.9);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: #3b82f6;
+        }
+
+        .upload-area h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .upload-area p {
+            color: #94a3b8;
+        }
+
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.8);
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .submit-btn {
+            padding: 1rem;
+            border-radius: 8px;
+            border: none;
+            background: #3b82f6;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        /* 相册区块 —— 调整图片内边距和显示样式 */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ✅ 核心修改：调整图片区域样式，减少内边距，优化显示 */
+        .gallery-img {
+            font-size: 3rem; /* 缩小图标字体 */
+            text-align: center;
+            padding: 1.5rem 1rem; /* 大幅减少内边距（原3.5rem 2rem） */
+            background: linear-gradient(45deg, #3b82f6, #a855f7);
+            flex-shrink: 0;
+            /* 新增：确保图片填满容器 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 280px; /* 固定图片区域高度，更统一 */
+        }
+        /* 新增：确保img标签填满父容器 */
+        .gallery-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 保持比例填充 */
+            border-radius: 4px; /* 轻微圆角，更美观 */
+        }
+
+        .gallery-info {
+            padding: 1.5rem;
+            flex:1;
+        }
+
+        .gallery-date {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-desc {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* 用户评价样式 */
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #e2e8f0;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .testimonial-text::before {
+            content: '"';
+            font-size: 3rem;
+            color: rgba(59, 130, 246, 0.2);
+            position: absolute;
+            top: -1rem;
+            left: -1rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #3b82f6, #a855f7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .author-info h4 {
+            color: #fff;
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* 页脚样式 */
+        .footer {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 4rem 5% 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-section a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #3b82f6;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 时间轴元素 -->
+    <div class="time-axis"></div>
+
+    <nav class="navbar">
+<a href="#" class="logo" style="height: 50px; display: flex; align-items: center;">
+    <img border="0" src="http://pan.cisa.cc/view.php/8d449115cdb0c46ed583b4a534332d5d.png" width="180" height="auto" style="display: block; vertical-align: middle;">
+</a>
+        <ul class="nav-links">
+            <li><a href="dn.html">域名释义</a></li>
+            <li><a href="#home">首页</a></li>
+            <li><a href="#features">功能</a></li>
+            <li><a href="#upload">上传影像</a></li>
+            <li><a href="#gallery">我的相册</a></li>
+            <li><a href="#testimonials">用户评价</a></li>
+            <li><a href="#about">关于我们</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero" id="home">
+        <h1>时光影像 · Timepic</h1>
+        <p>让每一刻都有迹可循，记录生活中的每一个精彩瞬间，珍藏属于你的人生故事<br>本站为域名展示概念站，没有实际功能。购买本站域名联系：ai@altoai.cn</p>
+        <div class="cta-buttons">
+            <a href="dn.html" class="cta-button cta-primary">开始记录</a>
+            <a href="dn.html" class="cta-button cta-secondary">浏览相册</a>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+            <h3>100万+</h3>
+            <p>注册用户</p>
+        </div>
+            <div class="stat-item">
+                <h3>5000万+</h3>
+                <p>影像存储</p>
+            </div>
+            <div class="stat-item">
+                <h3>99.9%</h3>
+                <p>数据安全</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>全天候服务</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2 class="section-title">核心功能</h2>
+            <p class="section-subtitle">全方位满足你的影像记录需求</p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🖼️</div>
+                <h3>高清存储</h3>
+                <p>无损原图存储，支持JPG、PNG、GIF等多种格式，单张图片最高支持50MB，让你的每一张照片都保持最佳画质</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📁</div>
+                <h3>智能分类</h3>
+                <p>AI智能识别照片内容，自动按时间、地点、人物分类管理，建立专属相册，查找回忆一目了然</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⏰</div>
+                <h3>时光胶囊</h3>
+                <p>设置未来开启时间，将珍贵影像封存，在特定日期自动解锁，给未来的自己一份惊喜礼物</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>隐私保护</h3>
+                <p>银行级加密技术，端到端安全传输，支持设置私密相册，只有你能查看最珍贵的回忆</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📤</div>
+                <h3>一键分享</h3>
+                <p>生成精美分享链接，可选择性分享给亲友，支持设置查看权限和有效期，安全又便捷</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>时光统计</h3>
+                <p>自动生成年度回顾、月度总结，查看影像分布热力图，用数据记录你的生活轨迹</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="upload-section" id="upload">
+        <div class="section-header">
+            <h2 class="section-title">上传你的影像</h2>
+            <p class="section-subtitle">记录此刻，珍藏永恒</p>
+        </div>
+        <div class="upload-container">
+            <div class="upload-area">
+                <div class="upload-icon">☁️</div>
+                <h3>点击或拖拽上传影像</h3>
+                <p>支持批量上传，JPG/PNG/GIF/WEBP格式，单张不超过50MB</p>
+            </div>
+
+            <form class="upload-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="album-name">所属相册</label>
+                        <select id="album-name" required="">
+                            <option value="">选择或创建相册</option>
+                            <option value="daily">日常生活</option>
+                            <option value="travel">旅行记忆</option>
+                            <option value="family">家庭时光</option>
+                            <option value="friend">朋友聚会</option>
+                            <option value="work">工作记录</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="privacy">隐私设置</label>
+                        <select id="privacy">
+                            <option value="public">公开</option>
+                            <option value="private">私密</option>
+                            <option value="shared">仅分享可见</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="caption">影像描述</label>
+                    <textarea id="caption" rows="3" placeholder="记录这一刻的心情和故事..."></textarea>
+                </div>
+
+                <div class="form-row" style="margin-top: 1.5rem;">
+                    <div class="form-group">
+                        <label for="location">拍摄地点</label>
+                        <input type="text" placeholder="可选填">
+                    </div>
+                    <div class="form-group">
+                        <label for="tags">标签</label>
+                        <input type="text" id="tags" placeholder="用逗号分隔，如：生日,旅行">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 1.5rem;">
+                    <label>
+                        <input type="checkbox" id="capsule-mode" style="width: auto;"> 
+                        启用时光胶囊模式（设置未来开启时间）
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    📤 上传并保存
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <section class="gallery-section" id="gallery">
+        <div class="section-header">
+            <h2 class="section-title">精选影像</h2>
+            <p class="section-subtitle">看看用户们的精彩瞬间</p>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <div class="gallery-img"><img src="https://p0.ssl.qhimgs1.com/sdr/400__/t047ca8e422a2d7d1f6.jpg"></div>
+                <div class="gallery-info">
+                    <div class="gallery-date">📅 2026-04-15</div>
+                    <div class="gallery-title">西藏之旅</div>
+                    <div class="gallery-desc">第一次看到布达拉宫，震撼到说不出话...</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-img"><img src="https://p0.ssl.qhimgs1.com/sdr/400__/t0436a04c4c35a8013e.jpg"></div>
+                <div class="gallery-info">
+                    <div class="gallery-date">📅 2026-03-20</div>
+                    <div class="gallery-title">25岁生日</div>
+                    <div class="gallery-desc">和最好的朋友们一起度过的难忘夜晚</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-img"><img src="https://p0.ssl.qhimgs1.com/sdr/400__/t01e01f5bdaaf4a394a.jpg"></div>
+                <div class="gallery-info">
+                    <div class="gallery-date">📅 2026-02-10</div>
+                    <div class="gallery-title">新成员</div>
+                    <div class="gallery-desc">家里迎来了新的毛孩子，太可爱了</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-img"><img src="https://p3.ssl.qhimgs1.com/sdr/400__/t01cdd64115ab9f19e9.jpg"></div>
+                <div class="gallery-info">
+                    <div class="gallery-date">📅 2026-01-08</div>
+                    <div class="gallery-title">毕业季</div>
+                    <div class="gallery-desc">四年大学生涯圆满结束，青春不散场</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-img"><img src="https://p0.ssl.qhimgs1.com/t01d82f82f7d473d3fa.jpg"></div>
+                <div class="gallery-info">
+                    <div class="gallery-date">📅 2025-12-25</div>
+                    <div class="gallery-title">求婚成功</div>
+                    <div class="gallery-desc">她答应了！余生请多指教</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-img"><img src="https://p1.ssl.qhimgs1.com/sdr/400__/t01525481b44cafb761.jpg"></div>
+                <div class="gallery-info">
+                    <div class="gallery-date">📅 2025-11-30</div>
+                    <div class="gallery-title">日出时刻</div>
+                    <div class="gallery-desc">凌晨4点爬山顶，只为这一刻的金色光芒</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <div class="section-header">
+            <h2 class="section-title">用户评价</h2>
+            <p class="section-subtitle">听听他们怎么说</p>
+        </div>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-text">用了时光影像两年了，存储了上万张照片，从来没有出现过丢失的情况。时光胶囊功能特别棒，每年生日都会收到一年前给自己的留言，感动到哭！</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">李</div>
+                    <div class="author-info">
+                        <h4>李明</h4>
+                        <p>摄影爱好者</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">智能分类功能太实用了，自动把照片按人物、地点分类，找照片再也不用翻半天了。界面也很美观，操作流畅，强烈推荐！</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">王</div>
+                    <div class="author-info">
+                        <h4>王芳</h4>
+                        <p>全职妈妈</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">作为摄影师，对图片质量要求很高。时光影像的原图存储完全没有压缩，色彩还原度也很好，是我用过最好的图片存储服务。</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">张</div>
+                    <div class="author-info">
+                        <h4>张伟</h4>
+                        <p>职业摄影师</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" id="about">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4><p>
+<img border="0" src="http://pan.cisa.cc/view.php/48e159ff04325bc4fd22ba6a9bc8b3d8.png" width="300" height="100"></p></h4>
+                <p style="color: #888; line-height: 1.8;">让每一刻都有迹可循，记录生活中的每一个精彩瞬间，珍藏属于你的人生故事。域名转让：ai@altoai.cn</p>
+            </div>
+            <div class="footer-section">
+                <h4>快速链接</h4>
+                <ul>
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#features">功能介绍</a></li>
+                    <li><a href="#upload">上传影像</a></li>
+                    <li><a href="#gallery">精选相册</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>支持中心</h4>
+                <ul>
+                    <li><a href="#">使用指南</a></li>
+                    <li><a href="#">常见问题</a></li>
+                    <li><a href="#">在线客服</a></li>
+                    <li><a href="#">联系我们</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>法律信息</h4>
+                <ul>
+                    <li><a href="#">隐私政策</a></li>
+                    <li><a href="#">服务条款</a></li>
+                    <li><a href="#">版权声明</a></li>
+                     <li><a href="#">数据安全</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 时光影像 Timepic.site 版权所有 | 让每一刻都有迹可循<br>本页面仅用于域名展示，不构成任何商业承诺</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript交互代码 -->
+    <script>
+        // 上传区域点击事件
+        document.querySelector('.upload-area').addEventListener('click', function() {
+            alert('点击此处上传图片（演示功能）');
+        });
+
+        // 表单提交事件
+        document.querySelector('.upload-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('影像上传成功！（演示功能）');
+        });
+
+        // 时光胶囊模式切换
+        document.getElementById('capsule-mode').addEventListener('change', function() {
+            if(this.checked) {
+                alert('已启用时光胶囊模式，请设置未来开启时间');
+            }
+        });
+
+        // 平滑滚动到锚点
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const target = document.querySelector(targetId);
+                if(target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if(window.scrollY > 50) {
+                navbar.style.background = 'rgba(26, 26, 46, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.3)';
+            } else {
+                navbar.style.background = 'rgba(26, 26, 46, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // 卡片悬停动画增强
+        document.querySelectorAll('.feature-card, .gallery-item').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            });
+        });
+
+        // 控制台欢迎信息
+        console.log('%c📸 时光影像 Timepic', 'color: #e94560; font-size: 24px; font-weight: bold;');
+        console.log('%c让每一刻都有迹可循', 'color: #f39c12; font-size: 14px;');
+        console.log('%c© 2026 Timepic.site', 'color: #888; font-size: 12px;');
+    </script>
+</body><body oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
+</html>

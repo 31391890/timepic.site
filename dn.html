@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>timepic.site 域名释义 - 时光影像品牌解读</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #0a0a15 0%, #1a1a2e 30%, #16213e 60%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* 粒子背景画布 */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* 浮动光斑 */
+        .floating-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            animation: floatOrb 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(233,69,96,0.15) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(243,156,18,0.12) 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(102,126,234,0.1) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -10s;
+        }
+
+        @keyframes floatOrb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -50px) scale(1.1); }
+            50% { transform: translate(-30px, 30px) scale(0.95); }
+            75% { transform: translate(-50px, -30px) scale(1.05); }
+        }
+
+        /* 宽屏容器 */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 头部区域 */
+        .header {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .domain-wrapper {
+            display: inline-block;
+            position: relative;
+            padding: 20px 40px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* 兼容Safari */
+        }
+
+        .domain-name {
+            font-size: 5.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #e94560 0%, #f39c12 30%, #ffd700 60%, #e94560 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text; /* 标准属性 */
+            color: transparent; /* 兼容非webkit内核 */
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+            animation: gradientShift 8s ease infinite, glow 3s ease-in-out infinite;
+            text-shadow: none;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 30px rgba(233,69,96,0.4)); }
+            50% { filter: drop-shadow(0 0 60px rgba(243,156,18,0.6)); }
+        }
+
+        .domain-name::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #e94560, #f39c12, transparent);
+            animation: underlineExpand 2s ease-in-out infinite;
+        }
+
+        @keyframes underlineExpand {
+            0%, 100% { width: 0; }
+            50% { width: 80%; }
+        }
+
+        .subtitle {
+            font-size: 1.6rem;
+            color: #b0b0b0;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .subtitle span {
+            display: inline-block;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 宽屏网格布局 */
+        .wide-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        /* 卡片样式 */
+        .section {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 25px;
+            padding: 50px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* 兼容Safari */
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #e94560, #f39c12, transparent);
+            transform: scaleX(0);
+            transition: transform 0.5s;
+        }
+
+        .section:hover::before {
+            transform: scaleX(1);
+        }
+
+        .section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            border-color: rgba(233,69,96,0.3);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #e94560, #f39c12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text; /* 标准属性 */
+            color: transparent; /* 兼容非webkit内核 */
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 5px;
+            height: 35px;
+            background: linear-gradient(180deg, #e94560, #f39c12);
+            border-radius: 3px;
+            animation: barPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes barPulse {
+            0%, 100% { height: 35px; }
+            50% { height: 25px; }
+        }
+
+        /* 释义卡片 */
+        .meaning-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .meaning-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(233,69,96,0.1) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .meaning-card:hover::after {
+            opacity: 1;
+        }
+
+        .meaning-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            background: rgba(255,255,255,0.06);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border-color: rgba(233,69,96,0.4);
+        }
+
+        .meaning-icon {
+            font-size: 4.5rem;
+            margin-bottom: 25px;
+            display: inline-block;
+            animation: iconFloat 3s ease-in-out infinite;
+            filter: drop-shadow(0 10px 20px rgba(233,69,96,0.3));
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .meaning-word {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #e94560, #f39c12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text; /* 标准属性 */
+            color: transparent; /* 兼容非webkit内核 */
+            margin-bottom: 12px;
+            letter-spacing: 3px;
+        }
+
+        .meaning-cn {
+            font-size: 1.5rem;
+            color: #f39c12;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .meaning-desc {
+            color: #999;
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+
+        /* 品牌理念列表 */
+        .brand-values {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .brand-values li {
+            padding: 25px 30px;
+            background: rgba(255,255,255,0.03);
+            border-left: 4px solid #e94560;
+            border-radius: 0 15px 15px 0;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-values li::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(233,69,96,0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .brand-values li:hover::before {
+            opacity: 1;
+        }
+
+        .brand-values li:hover {
+            background: rgba(255,255,255,0.06);
+            transform: translateX(15px);
+            border-left-width: 6px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .brand-values li strong {
+            color: #f39c12;
+            font-size: 1.3rem;
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .brand-values li p {
+            color: #bbb;
+            line-height: 1.8;
+        }
+
+        /* 联系方式区域 */
+        .contact-section {
+            background: linear-gradient(135deg, rgba(233,69,96,0.15), rgba(243,156,18,0.15));
+            border: 1px solid rgba(233,69,96,0.3);
+            position: relative;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+            pointer-events: none; /* 防止遮挡点击事件 */
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+            position: relative; /* 层级高于背景 */
+            z-index: 1;
+        }
+
+        .contact-item {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(233,69,96,0.3), transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .contact-item:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border-color: rgba(233,69,96,0.5);
+        }
+
+        .contact-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .contact-label {
+            color: #888;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .contact-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #e94560, #f39c12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text; /* 标准属性 */
+            color: transparent; /* 兼容非webkit内核 */
+            word-break: break-all;
+            transition: all 0.3s;
+        }
+
+        .contact-item:hover .contact-value {
+            transform: scale(1.05);
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 50px 20px;
+            color: #666;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            margin-top: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer p {
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #e94560, #f39c12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text; /* 标准属性 */
+            color: transparent; /* 兼容非webkit内核 */
+            font-weight: 700;
+        }
+
+        /* 鼠标跟随光效 */
+        .cursor-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(233,69,96,0.15) 0%, transparent 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            transition: opacity 0.3s;
+            opacity: 0; /* 默认隐藏，鼠标移动时显示 */
+        }
+
+        /* 进度条 */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #e94560, #f39c12);
+            z-index: 1000;
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        /* 响应式 */
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 1200px;
+            }
+            .domain-name {
+                font-size: 4rem;
+            }
+            .wide-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .brand-values {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+            .domain-name {
+                font-size: 2.5rem;
+                letter-spacing: 2px;
+            }
+            .wide-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .section {
+                padding: 30px 20px;
+            }
+            .section-title {
+                font-size: 1.6rem;
+            }
+            .cursor-glow {
+                display: none; /* 移动端隐藏鼠标光效 */
+            }
+        }
+
+        /* 滚动显示动画 */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 复制提示 */
+        .copy-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(233,69,96,0.5);
+            border-radius: 10px;
+            padding: 12px 24px;
+            color: #fff;
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .copy-toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- 进度条 -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- 粒子背景 -->
+    <canvas id="particles"></canvas>
+
+    <!-- 浮动光斑 -->
+    <div class="floating-orb orb-1"></div>
+    <div class="floating-orb orb-2"></div>
+    <div class="floating-orb orb-3"></div>
+
+    <!-- 鼠标跟随光效 -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- 复制提示 -->
+    <div class="copy-toast" id="copyToast">已复制到剪贴板</div>
+
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <div class="domain-wrapper">
+                <h1 class="domain-name">Timepic.site<br></h1>
+            </div>
+            <p class="subtitle">
+                <span>域名释义</span> · <span>品牌解读</span> · <span>时光影像</span>
+            </p>
+        </header>
+
+        <!-- 域名释义 -->
+        <section class="section fade-in-section">
+            <h2 class="section-title">域名释义</h2>
+            <p style="color: #ccc; font-size: 1.2rem; margin-bottom: 40px; line-height: 2;">
+                <span class="highlight">timepic.site</span> 是一个蕴含深刻意义的国际化域名，完美诠释了"时光影像"品牌的核心理念。已续费至2034年
+            </p>
+            
+            <div class="wide-grid">
+                <div class="meaning-card">
+                    <div class="meaning-icon">⏰</div>
+                    <div class="meaning-word">TIME</div>
+                    <div class="meaning-cn">时光 · 时间</div>
+                    <p class="meaning-desc">
+                        代表时间的流逝与珍贵，每一刻都值得被记录。时光不可逆转，但影像可以让美好永恒，定格生命中的每一个精彩瞬间。
+                    </p>
+                </div>
+
+                <div class="meaning-card">
+                    <div class="meaning-icon">🖼️</div>
+                    <div class="meaning-word">PIC</div>
+                    <div class="meaning-cn">影像 · 图片</div>
+                    <p class="meaning-desc">
+                        Picture的缩写，象征照片、图像、视觉记忆。用影像定格瞬间，让回忆有迹可循，珍藏属于你的人生故事。
+                    </p>
+                </div>
+
+                <div class="meaning-card">
+                    <div class="meaning-icon">🌐</div>
+                    <div class="meaning-word">SITE</div>
+                    <div class="meaning-cn">站点 · 平台</div>
+                    <p class="meaning-desc">
+                        代表专业的在线服务平台，为用户提供安全可靠的影像存储与分享空间，让美好跨越时空，与全球亲友共享。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 品牌理念 -->
+        <section class="section fade-in-section">
+            <h2 class="section-title">品牌理念</h2>
+            <ul class="brand-values">
+                <li>
+                    <strong>📸 记录美好</strong>
+                    <p>用影像捕捉生活中的每一个精彩瞬间，无论是日常点滴还是重要时刻，都值得被珍藏和回味。</p>
+                </li>
+                <li>
+                    <strong>⏰ 时光永恒</strong>
+                    <p>时间会流逝，但影像能让美好永存。我们帮助你将珍贵的回忆安全存储，随时回味那些温暖时光。</p>
+                </li>
+                <li>
+                    <strong>🔒 安全可靠</strong>
+                    <p>采用银行级加密技术，确保每一份影像数据的安全，多重备份机制，让你的回忆永不丢失。</p>
+                </li>
+                <li>
+                    <strong>🌍 全球共享</strong>
+                    <p>打破地域限制，让影像跨越时空，与全球亲友分享你的精彩生活，让爱没有距离。</p>
+                </li>
+                <li>
+                    <strong>💡 创新科技</strong>
+                    <p>持续引入AI智能分类、时光胶囊等创新功能，让影像管理更智能、更有趣，体验科技带来的便利。</p>
+                </li>
+                <li>
+                    <strong>❤️ 用心服务</strong>
+                    <p>以用户为中心，提供贴心周到的服务，让每一位用户都能感受到我们的用心与真诚。</p>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 联系方式 -->
+        <section class="section contact-section fade-in-section">
+            <h2 class="section-title">联系方式</h2>
+            <p style="color: #ccc; font-size: 1.2rem; margin-bottom: 40px; line-height: 2;">
+                如有合作意向、购买Timepic.site域名，欢迎通过以下方式联系我们，点击即可复制：
+            </p>
+            
+            <div class="contact-grid">
+                <div class="contact-item" data-copy="ai@altoai.cn">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-label">电子邮箱</div>
+                    <div class="contact-value">ai@altoai.cn</div>
+                </div>
+
+                <div class="contact-item" data-copy="altoai">
+                    <div class="contact-icon">💬</div>
+                    <div class="contact-label">微信</div>
+                    <div class="contact-value">altoai</div>
+                </div>
+
+                <div class="contact-item" data-copy="31391890">
+                    <div class="contact-icon">🐱</div>
+                    <div class="contact-label">QQ</div>
+                    <div class="contact-value">31391890</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>© 2026 <span class="highlight">timepic.site</span> 时光影像 版权所有</p>
+            <p>让每一刻都有迹可循 · 记录属于你的人生故事</p>
+            <p style="margin-top: 30px; font-size: 1rem;">
+                购买域名联系我们：ai@altoai.cn | 微信：altoai | QQ：31391890
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // 1. 滚动进度条
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progressBar").style.width = scrolled + "%";
+        });
+
+        // 2. 鼠标跟随光效
+        const cursorGlow = document.getElementById('cursorGlow');
+        document.addEventListener('mousemove', function(e) {
+            cursorGlow.style.opacity = 1;
+            cursorGlow.style.left = e.clientX + 'px';
+            cursorGlow.style.top = e.clientY + 'px';
+        });
+
+        // 鼠标离开窗口时隐藏光效
+        document.addEventListener('mouseleave', function() {
+            cursorGlow.style.opacity = 0;
+        });
+
+        // 3. 滚动显示动画
+        const fadeInSections = document.querySelectorAll('.fade-in-section');
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        fadeInSections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // 4. 复制功能
+        const contactItems = document.querySelectorAll('.contact-item');
+        const copyToast = document.getElementById('copyToast');
+
+        contactItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const copyText = this.getAttribute('data-copy');
+                // 创建临时输入框复制文本
+                const tempInput = document.createElement('input');
+                tempInput.value = copyText;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+
+                // 显示提示
+                copyToast.classList.add('show');
+                setTimeout(() => {
+                    copyToast.classList.remove('show');
+                }, 2000);
+            });
+        });
+
+        // 5. 粒子背景（简化版）
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        // 设置canvas尺寸
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // 粒子类
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.color = 'rgba(255,255,255,' + Math.random() * 0.2 + ')';
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // 创建粒子
+        function initParticles() {
+            particles = [];
+            const particleCount = Math.min(Math.floor(canvas.width / 10), 150);
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        // 动画循环
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        // 初始化粒子动画
+        initParticles();
+        animateParticles();
+        window.addEventListener('resize', initParticles);
+    </script>
+</body></body><body oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
+</html>
